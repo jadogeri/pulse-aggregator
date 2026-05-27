@@ -59,6 +59,40 @@ The ecosystem operates as a stateless observer. Rather than having your uptime p
 
 ---
 
+## 📥 How to Pull and Run the Project
+
+Follow these exact steps to clone, configure, and spin up this application on your local machine.
+
+### 1. Clone the Workspace
+Pull the repository directly from GitHub down to your desktop environment:
+```bash
+git clone https://github.com
+cd pulse-aggregator
+```
+
+### 2. Install Project Dependencies
+Because the NestJS framework sits inside a subfolder workspace, navigate directly into that project layer before triggering your package installs:
+```bash
+cd pulse-aggregator
+npm install
+```
+
+### 3. Setup Your Local Environment
+Create your local environment file within the subfolder workspace:
+```bash
+touch .env
+```
+Open the `.env` file and input your targeted testing endpoints (see the **Environment Configuration** section below).
+
+### 4. Fire Up the Server Engine
+Launch the application locally in development hot-reload watch mode:
+```bash
+npm run start:dev
+```
+Your service will compile and run live on: `http://localhost:3000/api/health` [INDEX].
+
+---
+
 ## ⚙️ Environment Configuration (`.env`)
 
 The service avoids hardcoded targets on GitHub. All nodes are passed as a single-line JSON text configuration matrix injected via the `MONITORED_SERVICES_JSON` variable.
