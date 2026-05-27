@@ -7,7 +7,7 @@ export interface MonitoredService {
 export const MONITORED_SERVICES: MonitoredService[] = [
   { 
     name: 'new-orleans-food-spots-api', 
-    url: 'https://nola-spots-api.onrender.com/health',
+    url: 'https://nola-spots-api.onrender.com/api/health',
     timeout: 5000 
   },
   /*
