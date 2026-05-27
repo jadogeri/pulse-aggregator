@@ -1,0 +1,36 @@
+name: Pulse Aggregator Continuous Integration
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+defaults:
+  run:
+    working-directory: pulse-aggregator # 👈 Sets the execution context for all commands
+
+jobs:
+  test-suite:
+    name: Run Test Matrix Execution
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Repository Code
+        uses: actions/checkout@v4
+
+      - name: Install and Setup Node.js Runtime Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: pulse-aggregator/package-lock.json # 👈 Tells the cacher where to find the lockfile
+
+      - name: Install Project Application Dependencies
+        run: npm ci
+
+      - name: Validate TypeScript Compilation and Build Steps
+        run: npm run build
+
+      - name: Execute HappyPath, EdgeCase, and Exception Matrix Tests
+        run: npm run test
