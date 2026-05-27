@@ -98,7 +98,7 @@ Your service will compile and run live on: `http://localhost:3000/api/health` [I
 The service avoids hardcoded targets on GitHub. All nodes are passed as a single-line JSON text configuration matrix injected via the `MONITORED_SERVICES_JSON` variable.
 
 ```env
-MONITORED_SERVICES_JSON="[{\"name\":\"new-orleans-food-spots-api\",\"url\":\"https://onrender.com\",\"timeout\":5000}]"
+MONITORED_SERVICES_JSON="[{\"name\":\"your web service name\",\"url\":\"your web service url\",\"timeout\":5000}]"
 ```
 
 > **Production Deployment Tip**: When inputting values inside the Render Dashboard Environment panels, skip escaping characters. Paste raw values directly:
