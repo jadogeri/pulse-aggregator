@@ -2,22 +2,26 @@ export interface MonitoredService {
   name: string;
   url: string;
   timeout?: number; // Optional custom timeout per service
+
 }
 
-export const MONITORED_SERVICES: MonitoredService[] = [
-  { 
-    name: 'new-orleans-food-spots-api', 
-    url: 'https://nola-spots-api.onrender.com/api/health',
-    timeout: 5000 
-  },
-  /*
-  { 
-    name: 'payment-processor', 
-    url: 'https://yourdomain.com/health',
-    timeout: 4000
-  },
-  { 
-    name: 'inventory-database-api', 
-    url: 'https://yourdomain.com/health' 
-  }*/
-];
+const rawJsonEnv = process.env.MONITORED_SERVICES_JSON;
+
+function loadServices(): MonitoredService[] {
+  if (!rawJsonEnv) {
+    // Local fallback list if environment variable is not set
+    return [{ name: 'google-fallback', url: 'https://google.com' }];
+  }
+
+  try {
+    // Parse the JSON array directly from memory
+    return JSON.parse(rawJsonEnv) as MonitoredService[];
+  } catch (error) {
+    // Prevents app from crashing on Render if there is a syntax error in the JSON string
+    console.error('🚨 CRITICAL: Invalid JSON string provided in MONITORED_SERVICES_JSON', error);
+    return [{ name: 'config-error-fallback', url: 'https://google.com' }];
+  }
+}
+
+export const MONITORED_SERVICES: MonitoredService[] = loadServices();
+
